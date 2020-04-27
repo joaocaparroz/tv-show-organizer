@@ -17,7 +17,7 @@ def get_show_id(name: str, api_key: str):
         if name not in show_list:
             show_str = [f"{i} - {show_list[i]}" for i in range(len(show_list))]
             show_str = '\n'.join(show_str)
-            selection = input(f'Selecione a linha correta ({name}): \n' + show_str + '\n')
+            selection = input(f'Select the corresponding match to ***{name}***: \n' + show_str + '\n')
             return show_info['results'][int(selection)]['id'], show_info['results'][int(selection)]['name']
         else:
             return show_info['results'][show_list.index(name)]['id'], show_info['results'][show_list.index(name)][

@@ -25,7 +25,7 @@ class TVShowsInfo(object):
         episode_list = [x for x in self.shows_info if
                         x['tv_show_name'] == tv_show_name and x['season'] == season and x['episode'] == episode]
         if len(episode_list) > 1:
-            raise Exception('Tem mais de um episódio com esses dados!')
+            raise Exception('There is more than one episode with this data! Contact the developer.')
         elif len(episode_list) == 0:
             return None
         else:

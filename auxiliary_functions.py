@@ -21,5 +21,5 @@ def check_and_create_directory(directory: str):
         check_directory_list.append(split)
         check_directory_str = '\\'.join(check_directory_list)
         if not os.path.exists(check_directory_str):
-            logging.info(f'Output directory does not exists. Creating {check_directory_str}')
+            logging.info(f'Output directory does not exists. Creating {check_directory_str}...')
             os.mkdir(check_directory_str)
