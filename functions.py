@@ -38,7 +38,7 @@ def process_file(file: dict, temp_folder: str):
         logging.info("Subtitle found!")
         if temp_folder:
             if not os.path.exists(temp_folder):
-                logging.info(f'Temp dir does not exists. Creating {temp_folder}')
+                logging.info(f'Temp dir does not exists. Creating {temp_folder}...')
                 os.mkdir(temp_folder)
             file['temp_file_path'] = f"{temp_folder}\\{file['input_filename']}"
             logging.info(f"Copying file from {file['input_file_path']} to {file['temp_file_path']}...")
@@ -63,8 +63,11 @@ def process_file(file: dict, temp_folder: str):
             mkv.tracks[-1].language = 'por'
             mkv.mux(mkv_output)
             check_and_create_directory(file['output_file_path'])
+            logging.info(f'Moving {mkv_output} to {file["output_file_path"]}...')
             shutil.move(mkv_output, file['output_file_path'])
+            logging.info(f"Removing {file['subtitle_file_path']}...")
             os.remove(file['subtitle_file_path'])
+            logging.info(f"Removing {file['input_file_path']}...")
             os.remove(file['input_file_path'])
         else:
             logging.info("Subtitle already added. Skipping...")
