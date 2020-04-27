@@ -1,4 +1,5 @@
 import logging
+from typing import Optional
 
 
 class EquivalencyList(object):
@@ -8,7 +9,7 @@ class EquivalencyList(object):
     def add_to_list(self, new_equivalency: dict):
         self.equivalence_list.update(new_equivalency)
 
-    def get_from_list(self, value: str):
+    def get_from_list(self, value: str) -> Optional[str]:
         return self.equivalence_list.get(value)
 
 
@@ -16,7 +17,7 @@ class TVShowsInfo(object):
     def __init__(self):
         self.shows_info = []
 
-    def add_to_list(self, new_show_info: dict):
+    def add_to_list(self, new_show_info: dict) -> Optional[str]:
         self.shows_info += new_show_info
 
     def get_episode_name(self, tv_show_name, season, episode):

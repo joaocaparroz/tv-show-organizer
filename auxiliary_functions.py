@@ -3,14 +3,14 @@ import os
 import logging
 
 
-def load_config():
+def load_config() -> dict:
     with open('config.json', encoding='utf-8') as json_file:
         config = json.load(json_file)
 
     return config
 
 
-def check_subtitles(mkv, lang: str = 'por'):
+def check_subtitles(mkv, lang: str = 'por') -> bool:
     selected_language_subtitles = [x for x in mkv.tracks if x.track_type == 'subtitles' and x.track_codec == 'SubRip/SRT' and x.language == lang]
     return len(selected_language_subtitles) != 0
 
