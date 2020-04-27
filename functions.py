@@ -9,7 +9,7 @@ from classes import EquivalencyList
 from string_functions import get_season_and_episode, get_show_name
 
 
-def files_standardizer(files: list, tv_show_names_equivalency_list: EquivalencyList, api_key):
+def files_standardizer(files: list, tv_show_names_equivalency_list: EquivalencyList, api_key) -> list:
     files = [{'input_file_path': x,
               'input_filename': x.split('\\')[-1],
               'input_extension': x.split('.')[-1]} for x in files]
@@ -26,7 +26,7 @@ def files_standardizer(files: list, tv_show_names_equivalency_list: EquivalencyL
     return files
 
 
-def process_file(file: dict, temp_folder):
+def process_file(file: dict, temp_folder: str):
     logging.info(f"Processing file {file['input_file_path']}...")
     if not file.get('subtitle_file_path'):
         logging.info("Subtitle not found!")
@@ -38,7 +38,7 @@ def process_file(file: dict, temp_folder):
         logging.info("Subtitle found!")
         if temp_folder:
             if not os.path.exists(temp_folder):
-                logging.info(f'Temp dir does not exists. Creating {temp_folder}')
+                logging.info(f'Temp dir does not exists. Creating {temp_folder}...')
                 os.mkdir(temp_folder)
             file['temp_file_path'] = f"{temp_folder}\\{file['input_filename']}"
             logging.info(f"Copying file from {file['input_file_path']} to {file['temp_file_path']}...")
@@ -63,8 +63,11 @@ def process_file(file: dict, temp_folder):
             mkv.tracks[-1].language = 'por'
             mkv.mux(mkv_output)
             check_and_create_directory(file['output_file_path'])
+            logging.info(f'Moving {mkv_output} to {file["output_file_path"]}...')
             shutil.move(mkv_output, file['output_file_path'])
+            logging.info(f"Removing {file['subtitle_file_path']}...")
             os.remove(file['subtitle_file_path'])
+            logging.info(f"Removing {file['input_file_path']}...")
             os.remove(file['input_file_path'])
         else:
             logging.info("Subtitle already added. Skipping...")
@@ -74,7 +77,7 @@ def process_file(file: dict, temp_folder):
             os.remove(mkv_input)
 
 
-def merge_video_and_subs_files(videos: list, subs: list):
+def merge_video_and_subs_files(videos: list, subs: list) -> list:
     for subtitle in subs:
         for video_file in videos:
             if subtitle['tv_show_name'] == video_file['tv_show_name'] and subtitle['season_number'] == video_file['season_number'] and subtitle['episode_number'] == video_file['episode_number']:
