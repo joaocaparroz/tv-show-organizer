@@ -67,8 +67,9 @@ def process_file(file: dict, temp_folder: str):
             shutil.move(mkv_output, file['output_file_path'])
             logging.info(f"Removing {file['subtitle_file_path']}...")
             os.remove(file['subtitle_file_path'])
-            logging.info(f"Removing {file['input_file_path']}...")
-            os.remove(file['input_file_path'])
+            if file['input_file_path'] != file['output_file_path']:
+                logging.info(f"Removing {file['input_file_path']}...")
+                os.remove(file['input_file_path'])
         else:
             logging.info("Subtitle already added. Skipping...")
 
