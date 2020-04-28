@@ -1,10 +1,11 @@
+import logging
 import os
 import shutil
+
 from pymkv import MKVFile
-import logging
 
 from api_functions import get_show_id
-from auxiliary_functions import check_subtitles, check_and_create_directory
+from auxiliary_functions import check_and_create_directory, check_subtitles
 from classes import EquivalencyList
 from string_functions import get_season_and_episode, get_show_name
 
@@ -81,7 +82,8 @@ def process_file(file: dict, temp_folder: str):
 def merge_video_and_subs_files(videos: list, subs: list) -> list:
     for subtitle in subs:
         for video_file in videos:
-            if subtitle['tv_show_name'] == video_file['tv_show_name'] and subtitle['season_number'] == video_file['season_number'] and subtitle['episode_number'] == video_file['episode_number']:
+            if subtitle['tv_show_name'] == video_file['tv_show_name'] and subtitle['season_number'] == video_file[
+                'season_number'] and subtitle['episode_number'] == video_file['episode_number']:
                 video_file.update({'subtitle_file_path': subtitle['input_file_path'],
                                    'subtitle_filename': subtitle['input_filename']})
 

@@ -1,19 +1,19 @@
+import logging
+
 import api_functions
 import auxiliary_functions
 import classes
 import functions
-import logging
-
 import string_functions
 
 logging.basicConfig(level=logging.INFO)
 
-config = auxiliary_functions.load_config()
+CONFIG = auxiliary_functions.load_config()
 
-INPUT_FOLDER = config['input_folder']
-OUTPUT_FOLDER = config['output_folder']
-API_KEY = config['api_key']
-TEMP_FOLDER = config['temp_folder']
+INPUT_FOLDER = CONFIG['input_folder']
+OUTPUT_FOLDER = CONFIG['output_folder']
+API_KEY = CONFIG['api_key']
+TEMP_FOLDER = CONFIG['temp_folder']
 
 
 def main():
@@ -33,11 +33,13 @@ def main():
 
     logging.info('Getting episode names...')
     for file in video_files:
-        episode_name = tv_shows_info.get_episode_name(file['tv_show_name'], file['season_number'], file['episode_number'])
+        episode_name = tv_shows_info.get_episode_name(file['tv_show_name'], file['season_number'],
+                                                      file['episode_number'])
         if not episode_name:
             episode_info = api_functions.get_show_info(file['show_id'], API_KEY)
             tv_shows_info.add_to_list(episode_info)
-            episode_name = tv_shows_info.get_episode_name(file['tv_show_name'], file['season_number'], file['episode_number'])
+            episode_name = tv_shows_info.get_episode_name(file['tv_show_name'], file['season_number'],
+                                                          file['episode_number'])
         if episode_name:
             file['episode_name'] = episode_name
 
