@@ -1,6 +1,6 @@
 import json
-import os
 import logging
+import os
 
 
 def load_config() -> dict:
@@ -11,7 +11,8 @@ def load_config() -> dict:
 
 
 def check_subtitles(mkv, lang: str = 'por') -> bool:
-    selected_language_subtitles = [x for x in mkv.tracks if x.track_type == 'subtitles' and x.track_codec == 'SubRip/SRT' and x.language == lang]
+    selected_language_subtitles = [x for x in mkv.tracks if
+                                   x.track_type == 'subtitles' and x.track_codec == 'SubRip/SRT' and x.language == lang]
     return len(selected_language_subtitles) != 0
 
 
